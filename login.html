@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Вход — Q-tech</title>
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    .auth-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .auth-card {
+      background: rgba(17,24,43,0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 440px;
+      backdrop-filter: blur(10px);
+    }
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .auth-logo a { display: inline-block; }
+    .auth-logo img { height: 36px; }
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 32px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 14px;
+      padding: 4px;
+    }
+    .auth-tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      color: #5f6675;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .auth-tab-btn.active {
+      background: #01C38D;
+      color: #191C29;
+    }
+    .auth-form { display: none; flex-direction: column; gap: 16px; }
+    .auth-form.active { display: flex; }
+    .auth-label {
+      font-size: 13px;
+      color: #9795B5;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .auth-input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+    }
+    .auth-input:focus { border-color: #01C38D; }
+    .auth-submit {
+      width: 100%;
+      background: #01C38D;
+      color: #191C29;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .auth-submit:hover { background: #00e6a8; }
+    .auth-hint {
+      text-align: center;
+      font-size: 13px;
+      color: #5f6675;
+      margin-top: 4px;
+    }
+    .auth-hint a { color: #01C38D; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <a href="index.html"><img src="img/logo.svg" alt="Q-tech"></a>
+    </div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" data-form="login">Войти</button>
+      <button class="auth-tab-btn" data-form="register">Зарегистрироваться</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form class="auth-form active" id="form-login" onsubmit="doLogin(event)">
+      <div>
+        <label class="auth-label">Email</label>
+        <input type="email" class="auth-input" placeholder="your@email.com" required>
+      </div>
+      <div>
+        <label class="auth-label">Пароль</label>
+        <input type="password" class="auth-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="auth-submit">Войти</button>
+      <div class="auth-hint">Нет аккаунта? <a href="#" onclick="switchTab('register')">Зарегистрироваться</a></div>
+    </form>
+
+    <!-- REGISTER -->
+    <form class="auth-form" id="form-register" onsubmit="doRegister(event)">
+      <div>
+        <label class="auth-label">Имя</label>
+        <input type="text" class="auth-input" placeholder="Иван" required>
+      </div>
+      <div>
+        <label class="auth-label">Email</label>
+        <input type="email" class="auth-input" placeholder="your@email.com" required>
+      </div>
+      <div>
+        <label class="auth-label">Пароль</label>
+        <input type="password" class="auth-input" placeholder="••••••••" required minlength="6">
+      </div>
+      <button type="submit" class="auth-submit">Создать аккаунт</button>
+      <div class="auth-hint">Уже есть аккаунт? <a href="#" onclick="switchTab('login')">Войти</a></div>
+    </form>
+  </div>
+</div>
+
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.auth-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.form));
+  });
+
+  function switchTab(name) {
+    document.querySelectorAll('.auth-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.form === name));
+    document.querySelectorAll('.auth-form').forEach(f => f.classList.toggle('active', f.id === 'form-' + name));
+  }
+
+  function doLogin(e) {
+    e.preventDefault();
+    localStorage.setItem('qtech_logged_in', 'true');
+    window.location.href = 'account.html';
+  }
+
+  function doRegister(e) {
+    e.preventDefault();
+    localStorage.setItem('qtech_logged_in', 'true');
+    window.location.href = 'account.html';
+  }
+</script>
+</body>
+</html>

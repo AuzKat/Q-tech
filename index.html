@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Q-tech — Premium Store</title>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/home.css"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container nav">
+
+    <div class="nav-left">
+      <a href="index.html" class="logo">
+        <img src="img/logo.svg" alt="Q-tech">
+      </a>
+      <!-- Desktop menu -->
+      <nav class="menu">
+        <a href="#categories">Каталог</a>
+        <a href="#info-section">Покупателям</a>
+      </nav>
+    </div>
+
+    <div class="icons">
+
+      <!-- SEARCH -->
+      <div class="search-box">
+        <div class="icon-wrap search-toggle">
+          <img src="img/icon-search.svg"
+               alt="Поиск">
+        </div>
+        <input type="text" id="searchInput" placeholder="Поиск...">
+      </div>
+
+      <!-- PHONE -->
+      <a href="tel:+79999999999" class="icon-wrap">
+        <img src="img/icon-phone.svg"
+             data-hover="img/icon-phone-hover.svg"
+             alt="Телефон">
+      </a>
+
+      <!-- CART -->
+      <div class="icon-wrap cart-badge-wrap cart-toggle">
+        <img src="img/icon-busket.svg"
+             data-hover="img/icon-busket-hover.svg"
+             alt="Корзина">
+        <span class="cart-badge" id="cart-badge">0</span>
+      </div>
+
+      <!-- ACCOUNT -->
+      <a href="account.html" class="icon-wrap">
+        <img src="img/icon-account.svg"
+             data-hover="img/icon-account-hover.svg"
+             alt="Аккаунт">
+      </a>
+
+      <!-- BURGER -->
+      <button class="burger-btn" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- CART MODAL -->
+      <div class="cart-modal"></div>
+
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <button class="mobile-menu-close" aria-label="Закрыть">×</button>
+  <a href="#categories">Категории</a>
+  <a href="catalog.html?category=phones">Смартфоны</a>
+  <a href="catalog.html?category=laptops">Ноутбуки</a>
+  <a href="catalog.html?category=headphones">Наушники</a>
+  <a href="catalog.html?category=watch">Умные часы</a>
+  <a href="catalog.html?category=vacuum">Пылесосы</a>
+  <a href="catalog.html?category=dryer">Фены</a>
+  <a href="account.html">Покупателям</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-slider">
+
+    <div class="hero-slide active">
+      <img src="img/banner-1.jpg" alt="Баннер 1">
+    </div>
+
+    <div class="hero-slide">
+      <img src="img/banner-2.jpg" alt="Баннер 2">
+    </div>
+
+    <div class="hero-slide">
+      <img src="img/banner-3.jpg" alt="Баннер 3">
+    </div>
+
+  </div>
+
+  <div class="hero-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="categories-grid">
+
+      <a href="catalog.html?category=laptops" class="category-card laptop">
+        <div class="category-info">
+          <h3>Ноутбуки</h3>
+          <div class="arrow"></div>
+        </div>
+        <img src="img/mac-grid.png" alt="MacBook">
+      </a>
+
+      <a href="catalog.html?category=watch" class="category-card">
+        <div class="category-info">
+          <h3>Умные часы</h3>
+          <div class="arrow"></div>
+        </div>
+        <img src="img/watch-grid.png" alt="Apple Watch">
+      </a>
+
+      <a href="catalog.html?category=headphones" class="category-card">
+        <div class="category-info">
+          <h3>Наушники</h3>
+          <div class="arrow"></div>
+        </div>
+        <img src="img/airpods-grid.png" alt="AirPods">
+      </a>
+
+      <a href="catalog.html?category=vacuum" class="category-card">
+        <div class="category-info">
+          <h3>Пылесосы</h3>
+          <div class="arrow"></div>
+        </div>
+        <img src="img/vacuum-grid.png" alt="Пылесос">
+      </a>
+
+      <a href="catalog.html?category=phones" class="category-card">
+        <div class="category-info">
+          <h3>Смартфоны</h3>
+          <div class="arrow"></div>
+        </div>
+        <img class="phone-img" src="img/iphone-grid.png" alt="iPhone">
+      </a>
+
+      <a href="catalog.html?category=dryer" class="category-card">
+        <div class="category-info">
+          <h3>Фены</h3>
+          <div class="arrow"></div>
+        </div>
+        <img class="dryer-img" src="img/dryer-grid.png" alt="Фен">
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- TOP PRODUCTS -->
+<section class="products">
+  <div class="container">
+    <h2>Топ продаж</h2>
+    <div class="products-grid" id="top-products">
+      <!-- Рендерится через JS -->
+    </div>
+  </div>
+</section>
+
+<!-- INFO BLOCKS -->
+<section class="info-section" id="info-section">
+  <div class="container">
+    <h2 class="info-title" style="color:#01C38D;">Полезная информация</h2>
+
+    <!-- REVIEWS -->
+    <div class="info-block" id="reviews">
+      <h3 class="info-block-title">Отзывы покупателей</h3>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">АИ</div>
+            <div>
+              <div class="review-name">Александр И.</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-text">Заказал MacBook Air M3 — доставили за 2 дня, всё в порядке. Упаковка отличная, товар оригинальный. Очень доволен покупкой!</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">МС</div>
+            <div>
+              <div class="review-name">Мария С.</div>
+              <div class="review-stars">★★★★★</div>
+            </div>
+          </div>
+          <p class="review-text">Брала AirPods Max — пришли быстро, цена ниже чем в официальных магазинах. Поддержка ответила на все вопросы. Буду заказывать ещё.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar">ДК</div>
+            <div>
+              <div class="review-name">Дмитрий К.</div>
+              <div class="review-stars">★★★★☆</div>
+            </div>
+          </div>
+          <p class="review-text">Хороший магазин, заказал iPhone 15 Pro. Небольшая задержка с доставкой, но в итоге всё пришло в целости. Рекомендую.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="info-block" id="faq">
+      <h3 class="info-block-title">Часто задаваемые вопросы</h3>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">Как сделать заказ?</button>
+          <div class="faq-answer">Выберите товар в каталоге, нажмите «В корзину», затем перейдите в корзину и нажмите «Оформить заказ». Укажите данные доставки и выберите способ оплаты.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Как долго идёт доставка?</button>
+          <div class="faq-answer">Доставка по Москве занимает 1–2 рабочих дня. По России — 3–7 рабочих дней в зависимости от региона. Экспресс-доставка доступна в день заказа.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Можно ли вернуть товар?</button>
+          <div class="faq-answer">Да, возврат возможен в течение 14 дней с момента получения при условии сохранения товарного вида, упаковки и комплектации. Деньги возвращаются в течение 3–5 рабочих дней.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Оригинальные ли товары в магазине?</button>
+          <div class="faq-answer">Да, все товары в нашем магазине оригинальные и поставляются по официальным каналам. На каждый товар предоставляется гарантия производителя.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Есть ли гарантия на товары?</button>
+          <div class="faq-answer">На все товары распространяется официальная гарантия производителя: Apple — 1 год, Dyson — 2 года, остальные бренды — 1 год. Также мы предлагаем дополнительную гарантию до 3 лет.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELIVERY & PAYMENT -->
+    <div class="info-blocks-row">
+      <div class="info-block info-block-half" id="delivery">
+        <h3 class="info-block-title">Как оформить доставку</h3>
+        <div class="info-steps">
+          <div class="info-step">
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <strong>Выберите товар</strong>
+              <span>Добавьте в корзину нужные позиции</span>
+            </div>
+          </div>
+          <div class="info-step">
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <strong>Укажите адрес</strong>
+              <span>Введите адрес доставки или пункта выдачи</span>
+            </div>
+          </div>
+          <div class="info-step">
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <strong>Выберите способ</strong>
+              <span>Курьер, самовывоз или почта России</span>
+            </div>
+          </div>
+          <div class="info-step">
+            <div class="step-num">4</div>
+            <div class="step-text">
+              <strong>Получите заказ</strong>
+              <span>Получите уведомление и заберите товар</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-tags">
+          <span class="info-tag">Бесплатно от 5 000 ₽</span>
+          <span class="info-tag">Курьер 1–2 дня</span>
+          <span class="info-tag">Самовывоз</span>
+          <span class="info-tag">Почта России</span>
+        </div>
+      </div>
+
+      <div class="info-block info-block-half" id="payment">
+        <h3 class="info-block-title">Способы оплаты</h3>
+        <div class="payment-methods">
+          <div class="payment-method">
+            <div class="payment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="3" stroke="#01C38D" stroke-width="1.5"/><path d="M2 10h20" stroke="#01C38D" stroke-width="1.5"/></svg>
+            </div>
+            <div>
+              <strong>Банковская карта</strong>
+              <span>Visa, Mastercard, Мир — онлайн при заказе</span>
+            </div>
+          </div>
+          <div class="payment-method">
+            <div class="payment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="#01C38D" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="#01C38D" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <strong>Оплата при получении</strong>
+              <span>Наличными или картой курьеру</span>
+            </div>
+          </div>
+          <div class="payment-method">
+            <div class="payment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M17 8C17 10.761 14.761 13 12 13C9.239 13 7 10.761 7 8C7 5.239 9.239 3 12 3C14.761 3 17 5.239 17 8Z" stroke="#01C38D" stroke-width="1.5"/><path d="M3 21C3 17.134 7.029 14 12 14C16.971 14 21 17.134 21 21" stroke="#01C38D" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <strong>СБП / Перевод</strong>
+              <span>Быстрые платежи по номеру телефона</span>
+            </div>
+          </div>
+          <div class="payment-method">
+            <div class="payment-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 12h6M9 16h6M13 4H8.8C7.12 4 6 5.12 6 6.8v10.4C6 18.88 7.12 20 8.8 20h6.4c1.68 0 2.8-1.12 2.8-2.8V8l-4-4z" stroke="#01C38D" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <strong>Рассрочка</strong>
+              <span>0% на 3–12 месяцев через банки-партнёры</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GUARANTEE -->
+    <div class="info-block" id="guarantee">
+      <h3 class="info-block-title">Гарантия и поддержка</h3>
+      <div class="guarantee-grid">
+        <div class="guarantee-card">
+          <div class="guarantee-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z" stroke="#01C38D" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#01C38D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h4>Официальная гарантия</h4>
+          <p>Все товары имеют официальную гарантию производителя от 1 до 2 лет</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M12 3l9 9-9 9" stroke="#01C38D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h4>Возврат 14 дней</h4>
+          <p>Если товар не подошёл — вернём деньги без лишних вопросов</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.7 11.2a19.79 19.79 0 01-3.07-8.67A2 2 0 013.61 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.32 6.32l.88-.88a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#01C38D" stroke-width="1.5"/></svg>
+          </div>
+          <h4>Поддержка 24/7</h4>
+          <p>Наши специалисты готовы помочь в любое время по телефону и в чате</p>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M20 7H4C2.9 7 2 7.9 2 9v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2z" stroke="#01C38D" stroke-width="1.5"/><path d="M16 3H8L6 7h12l-2-4z" stroke="#01C38D" stroke-width="1.5"/></svg>
+          </div>
+          <h4>Оригинальный товар</h4>
+          <p>Мы работаем только с официальными поставщиками и гарантируем подлинность</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUPPORT -->
+    <div class="info-block" id="support">
+      <h3 class="info-block-title">Служба поддержки</h3>
+      <div class="support-grid">
+        <div class="support-card">
+          <div class="support-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.7 11.2a19.79 19.79 0 01-3.07-8.67A2 2 0 013.61 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91a16 16 0 006.32 6.32l.88-.88a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#01C38D" stroke-width="1.5"/></svg>
+          </div>
+          <h4>Телефон</h4>
+          <a href="tel:+79999999999">+7 (999) 999-99-99</a>
+          <span>Пн–Вс, 9:00–21:00</span>
+        </div>
+        <div class="support-card">
+          <div class="support-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="#01C38D" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke="#01C38D" stroke-width="1.5"/></svg>
+          </div>
+          <h4>Email</h4>
+          <a href="mailto:support@q-tech.ru">support@q-tech.ru</a>
+          <span>Ответ в течение 2 часов</span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer-wrap">
+  <div class="container footer-grid">
+
+    <div class="footer-block">
+      <h4>Каталог</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="catalog.html?category=phones">Смартфоны</a>
+          <a href="catalog.html?category=laptops">Ноутбуки</a>
+          <a href="catalog.html?category=headphones">Наушники</a>
+        </div>
+        <div class="footer-column">
+          <a href="catalog.html?category=watch">Умные часы</a>
+          <a href="catalog.html?category=dryer">Фены</a>
+          <a href="catalog.html?category=vacuum">Пылесосы</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-block">
+      <h4>Покупателям</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="#support">Контакты</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#guarantee">Гарантия</a>
+        </div>
+        <div class="footer-column">
+          <a href="#delivery">Доставка</a>
+          <a href="#payment">Оплата</a>
+          <a href="#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <p class="footer-copy">© 2026 Q-tech</p>
+</footer>
+
+<!-- BACKGROUND BLOBS -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/common.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

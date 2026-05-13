@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Товар — Q-tech</title>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/catalog.css"/>
+  <link rel="stylesheet" href="css/product.css"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container nav">
+
+    <div class="nav-left">
+      <a href="index.html" class="logo">
+        <img src="img/logo.svg" alt="Q-tech">
+      </a>
+      <nav class="menu">
+        <a href="catalog.html">Категории</a>
+        <a href="index.html#info-section">Покупателям</a>
+      </nav>
+    </div>
+
+    <div class="icons">
+      <div class="search-box">
+        <div class="icon-wrap search-toggle">
+          <img src="img/icon-search.svg" data-hover="img/icon-search-hover.svg" alt="Поиск">
+        </div>
+        <input type="text" id="searchInput" placeholder="Поиск...">
+      </div>
+
+      <a href="tel:+79999999999" class="icon-wrap">
+        <img src="img/icon-phone.svg" data-hover="img/icon-phone-hover.svg" alt="Телефон">
+      </a>
+
+      <div class="icon-wrap cart-badge-wrap cart-toggle">
+        <img src="img/icon-busket.svg" data-hover="img/icon-busket-hover.svg" alt="Корзина">
+        <span class="cart-badge" id="cart-badge">0</span>
+      </div>
+
+      <a href="account.html" class="icon-wrap">
+        <img src="img/icon-account.svg" data-hover="img/icon-account-hover.svg" alt="Аккаунт">
+      </a>
+
+      <div class="cart-modal"></div>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <nav class="product-breadcrumb">
+    <a href="index.html">Главная</a>
+    <span class="sep">/</span>
+    <a href="catalog.html" id="bc-category">Каталог</a>
+    <span class="sep">/</span>
+    <span class="current" id="bc-product">Товар</span>
+  </nav>
+</div>
+
+<!-- PRODUCT LAYOUT -->
+<div class="container">
+  <div class="product-layout">
+
+    <!-- GALLERY -->
+    <div class="product-gallery">
+      <div class="product-main-img">
+        <div class="img-glow"></div>
+        <img id="main-product-img" src="" alt="" style="transition: opacity 0.2s ease;">
+      </div>
+      <div class="product-thumbs" id="product-thumbs"></div>
+    </div>
+
+    <!-- INFO -->
+    <div class="product-info">
+
+      <div class="product-info-top">
+        <div class="product-brand" id="product-brand"></div>
+        <h1 class="product-title" id="product-title"></h1>
+        <div class="product-rating-row" id="product-rating"></div>
+      </div>
+
+      <div class="product-price-block">
+        <div class="product-price" id="product-price"></div>
+        <div class="product-price-old" id="product-price-old"></div>
+        <div class="product-price-save" id="product-price-save"></div>
+      </div>
+
+      <div class="product-availability">
+        <span class="avail-dot"></span>
+        <span class="avail-text"></span>
+      </div>
+
+      <!-- COLOR SELECTOR -->
+      <div id="product-color-selector" style="display:none;">
+        <div class="product-desc-title">Цвет: <span id="color-selected-name" style="color:#c8cdd8; text-transform:none; letter-spacing:0;"></span></div>
+        <div class="color-swatches" id="color-swatches"></div>
+      </div>
+
+      <!-- CART ACTION -->
+      <div class="product-cart-action" id="product-cart-action">
+        <!-- Рендерится через JS -->
+      </div>
+
+      <div class="product-divider"></div>
+
+      <!-- DESCRIPTION -->
+      <div>
+        <div class="product-desc-title">Описание</div>
+        <p class="product-desc" id="product-desc"></p>
+      </div>
+
+      <div class="product-divider"></div>
+
+      <!-- SPECS -->
+      <div>
+        <div class="product-desc-title">Характеристики</div>
+        <div class="product-specs" id="product-specs"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<div class="container" id="product-reviews-section" style="margin-bottom: 60px; display:none;">
+  <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+    <h2 style="font-size:28px;margin:0;">Отзывы <span style="color:#01C38D;">покупателей</span></h2>
+    <span id="reviews-total-label" style="font-size:15px;color:#9795B5;"></span>
+  </div>
+
+  <!-- Reviews list -->
+  <div id="product-reviews-list" style="display:flex;flex-direction:column;gap:16px;"></div>
+
+  <!-- Show all button -->
+  <div id="reviews-show-more-wrap" style="text-align:center;margin-top:28px;display:none;">
+    <button id="reviews-show-more-btn" onclick="showMoreReviews()" style="
+      background:transparent;
+      border:1.5px solid rgba(1,195,141,0.4);
+      border-radius:14px;
+      color:#01C38D;
+      font-family:'DM Sans',sans-serif;
+      font-size:15px;
+      font-weight:600;
+      padding:13px 32px;
+      cursor:pointer;
+      transition:0.2s;
+    " onmouseover="this.style.background='rgba(1,195,141,0.08)'" onmouseout="this.style.background='transparent'">
+      Показать все отзывы
+    </button>
+  </div>
+
+  <!-- Write review form -->
+  <div style="
+    background:rgba(17,24,43,0.7);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:24px;
+    padding:32px;
+    margin-top:40px;
+  ">
+    <h3 style="font-size:20px;color:white;margin-bottom:24px;font-weight:700;">Оставить отзыв</h3>
+    <div id="review-form-content">
+      <!-- Rating picker -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;color:#9795B5;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">Ваша оценка</div>
+        <div id="review-stars" style="display:flex;gap:8px;cursor:pointer;">
+          <span class="rev-star" data-val="1" style="font-size:32px;color:#2a2f3f;transition:0.15s;">★</span>
+          <span class="rev-star" data-val="2" style="font-size:32px;color:#2a2f3f;transition:0.15s;">★</span>
+          <span class="rev-star" data-val="3" style="font-size:32px;color:#2a2f3f;transition:0.15s;">★</span>
+          <span class="rev-star" data-val="4" style="font-size:32px;color:#2a2f3f;transition:0.15s;">★</span>
+          <span class="rev-star" data-val="5" style="font-size:32px;color:#2a2f3f;transition:0.15s;">★</span>
+        </div>
+      </div>
+      <!-- Name -->
+      <div style="margin-bottom:16px;">
+        <div style="font-size:13px;color:#9795B5;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Ваше имя</div>
+        <input type="text" id="review-name" placeholder="Иван И." style="
+          width:100%;box-sizing:border-box;
+          background:#1e2433;border:1px solid #2a2f3f;border-radius:12px;
+          padding:12px 16px;color:white;font-family:'DM Sans',sans-serif;
+          font-size:15px;outline:none;transition:border-color 0.2s;
+        " onfocus="this.style.borderColor='#01C38D'" onblur="this.style.borderColor='#2a2f3f'">
+      </div>
+      <!-- Text -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;color:#9795B5;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;">Отзыв</div>
+        <textarea id="review-text" placeholder="Поделитесь впечатлениями о товаре..." rows="4" style="
+          width:100%;box-sizing:border-box;
+          background:#1e2433;border:1px solid #2a2f3f;border-radius:12px;
+          padding:12px 16px;color:white;font-family:'DM Sans',sans-serif;
+          font-size:15px;outline:none;resize:vertical;transition:border-color 0.2s;
+          min-height:110px;
+        " onfocus="this.style.borderColor='#01C38D'" onblur="this.style.borderColor='#2a2f3f'"></textarea>
+      </div>
+      <button onclick="submitReview()" style="
+        background:#01C38D;color:#191C29;border:none;border-radius:12px;
+        font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;
+        padding:13px 32px;cursor:pointer;transition:0.2s;
+      " onmouseover="this.style.background='#00e6a8'" onmouseout="this.style.background='#01C38D'">
+        Опубликовать отзыв
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED -->
+<div class="container related-section">
+  <h2>Похожие <span>товары</span></h2>
+  <div class="products-grid-catalog related-grid" id="related-grid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-wrap">
+  <div class="container footer-grid">
+    <div class="footer-block">
+      <h4>Каталог</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="catalog.html?category=phones">Смартфоны</a>
+          <a href="catalog.html?category=laptops">Ноутбуки</a>
+          <a href="catalog.html?category=headphones">Наушники</a>
+        </div>
+        <div class="footer-column">
+          <a href="catalog.html?category=watch">Умные часы</a>
+          <a href="catalog.html?category=dryer">Фены</a>
+          <a href="catalog.html?category=vacuum">Пылесосы</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-block">
+      <h4>Покупателям</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="index.html#support">Контакты</a>
+          <a href="index.html#reviews">Отзывы</a>
+        </div>
+        <div class="footer-column">
+          <a href="index.html#delivery">Доставка</a>
+          <a href="index.html#payment">Оплата</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Q-tech</p>
+</footer>
+
+<!-- BACKGROUND BLOBS -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/common.js"></script>
+<script src="js/product.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Каталог — Q-tech</title>
+
+  <link rel="stylesheet" href="css/global.css"/>
+  <link rel="stylesheet" href="css/catalog.css"/>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container nav">
+
+    <div class="nav-left">
+      <a href="index.html" class="logo">
+        <img src="img/logo.svg" alt="Q-tech">
+      </a>
+      <nav class="menu">
+        <a href="catalog.html">Категории</a>
+        <a href="index.html#support">Покупателям</a>
+      </nav>
+    </div>
+
+    <div class="icons">
+
+      <div class="search-box">
+        <div class="icon-wrap search-toggle">
+          <img src="img/icon-search.svg" data-hover="img/icon-search-hover.svg" alt="Поиск">
+        </div>
+        <input type="text" id="searchInput" placeholder="Поиск...">
+      </div>
+
+      <a href="tel:+79999999999" class="icon-wrap">
+        <img src="img/icon-phone.svg" data-hover="img/icon-phone-hover.svg" alt="Телефон">
+      </a>
+
+      <div class="icon-wrap cart-badge-wrap cart-toggle">
+        <img src="img/icon-busket.svg" data-hover="img/icon-busket-hover.svg" alt="Корзина">
+        <span class="cart-badge" id="cart-badge">0</span>
+      </div>
+
+      <a href="account.html" class="icon-wrap">
+        <img src="img/icon-account.svg" data-hover="img/icon-account-hover.svg" alt="Аккаунт">
+      </a>
+
+      <!-- BURGER -->
+      <button class="burger-btn" aria-label="Меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="cart-modal"></div>
+    </div>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <button class="mobile-menu-close" aria-label="Закрыть">×</button>
+  <a href="index.html#categories">Категории</a>
+  <a href="catalog.html?category=phones">Смартфоны</a>
+  <a href="catalog.html?category=laptops">Ноутбуки</a>
+  <a href="catalog.html?category=headphones">Наушники</a>
+  <a href="catalog.html?category=watch">Умные часы</a>
+  <a href="catalog.html?category=vacuum">Пылесосы</a>
+  <a href="catalog.html?category=dryer">Фены</a>
+  <a href="index.html#support">Покупателям</a>
+</div>
+
+<!-- CATALOG HEADER -->
+<div class="container">
+  <div class="catalog-header">
+    <h1 id="catalog-title">Каталог</h1>
+    <div class="catalog-breadcrumb">
+      <a href="index.html">Главная</a>
+      <span class="sep">/</span>
+      <span id="breadcrumb-cat">Каталог</span>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE FILTER TOGGLE -->
+<div class="container" style="margin-bottom: 16px;">
+  <button class="filter-toggle-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    Фильтры
+  </button>
+</div>
+
+<!-- CATALOG LAYOUT -->
+<div class="container">
+  <div class="catalog-layout">
+
+    <!-- PRODUCTS SIDE -->
+    <div>
+      <div class="catalog-toolbar">
+        <div class="catalog-count" id="products-count">Загрузка...</div>
+        <div class="catalog-sort">
+          <label>Сортировка:</label>
+          <select class="sort-select">
+            <option value="popular">По популярности</option>
+            <option value="price-asc">Сначала дешевле</option>
+            <option value="price-desc">Сначала дороже</option>
+            <option value="rating">По рейтингу</option>
+            <option value="new">Новинки</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid-catalog" id="products-grid">
+        <!-- Карточки рендерятся через JS -->
+      </div>
+    </div>
+
+    <!-- SIDEBAR FILTERS -->
+    <aside class="sidebar">
+
+      <div class="sidebar-section">
+        <h4>Цена, ₽</h4>
+        <div class="price-range">
+          <div class="price-inputs">
+            <input type="text" class="price-input price-from" placeholder="от">
+            <input type="text" class="price-input price-to" placeholder="до">
+          </div>
+          <input type="range" class="price-slider">
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>Бренд</h4>
+        <div class="filter-list brand-list">
+          <!-- Рендерится через JS -->
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <h4>Наличие</h4>
+        <div class="filter-list">
+          <label class="filter-item">
+            <input type="checkbox" class="instock-check">
+            <span>Только в наличии</span>
+          </label>
+        </div>
+      </div>
+
+      <button class="filter-reset">Сбросить фильтры</button>
+
+    </aside>
+
+  </div>
+</div>
+
+<!-- MOBILE FILTER DRAWER -->
+<div class="filter-drawer-overlay"></div>
+<div class="filter-drawer">
+  <button class="filter-drawer-close">×</button>
+
+  <div style="margin-top:20px;">
+    <div class="sidebar-section">
+      <h4>Цена, ₽</h4>
+      <div class="price-range">
+        <div class="price-inputs">
+          <input type="text" class="price-input price-from" placeholder="от">
+          <input type="text" class="price-input price-to" placeholder="до">
+        </div>
+        <input type="range" class="price-slider">
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:24px;">
+      <h4>Бренд</h4>
+      <div class="filter-list brand-list">
+        <!-- Рендерится через JS -->
+      </div>
+    </div>
+
+    <div class="sidebar-section" style="margin-top:24px;">
+      <h4>Наличие</h4>
+      <div class="filter-list">
+        <label class="filter-item">
+          <input type="checkbox" class="instock-check">
+          <span>Только в наличии</span>
+        </label>
+      </div>
+    </div>
+
+    <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
+      <button class="filter-reset">Сбросить</button>
+      <button class="filter-apply filter-drawer-close">Применить</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-wrap">
+  <div class="container footer-grid">
+    <div class="footer-block">
+      <h4>Каталог</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="catalog.html?category=phones">Смартфоны</a>
+          <a href="catalog.html?category=laptops">Ноутбуки</a>
+          <a href="catalog.html?category=headphones">Наушники</a>
+        </div>
+        <div class="footer-column">
+          <a href="catalog.html?category=watch">Умные часы</a>
+          <a href="catalog.html?category=dryer">Фены</a>
+          <a href="catalog.html?category=vacuum">Пылесосы</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-block">
+      <h4>Покупателям</h4>
+      <div class="footer-columns">
+        <div class="footer-column">
+          <a href="index.html#support">Контакты</a>
+          <a href="index.html#reviews">Отзывы</a>
+        </div>
+        <div class="footer-column">
+          <a href="index.html#delivery">Доставка</a>
+          <a href="index.html#payment">Оплата</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="footer-copy">© 2026 Q-tech</p>
+</footer>
+
+<!-- BACKGROUND BLOBS -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/common.js"></script>
+<script src="js/catalog.js"></script>
+
+</body>
+</html>
