@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход — Q-tech</title>
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        .auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+        .auth-card { background: rgba(17,24,43,0.9); border: 1px solid rgba(255,255,255,0.08); border-radius: 28px; padding: 48px 40px; width: 100%; max-width: 440px; backdrop-filter: blur(10px); }
+        .auth-logo { text-align: center; margin-bottom: 32px; }
+        .auth-logo img { height: 36px; }
+        .auth-tabs { display: flex; gap: 8px; margin-bottom: 32px; }
+        .auth-tab-btn { flex: 1; background: rgba(255,255,255,0.05); border: none; color: #5f6675; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; padding: 12px; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+        .auth-tab-btn.active { background: #01C38D; color: #191C29; }
+        .auth-form { display: none; flex-direction: column; gap: 16px; }
+        .auth-form.active { display: flex; }
+        .auth-label { font-size: 13px; color: #9795B5; margin-bottom: 6px; display: block; }
+        .auth-input { width: 100%; background: #1e2433; border: 1px solid #2a2f3f; border-radius: 12px; color: white; font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 12px 16px; outline: none; box-sizing: border-box; }
+        .auth-input:focus { border-color: #01C38D; }
+        .auth-submit { width: 100%; background: #01C38D; color: #191C29; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; padding: 14px; cursor: pointer; margin-top: 8px; }
+        .auth-submit:hover { background: #00e6a8; }
+        .auth-hint { text-align: center; font-size: 13px; color: #5f6675; margin-top: 16px; }
+        .auth-hint a { color: #01C38D; text-decoration: none; cursor: pointer; }
+        .error-msg { color: #ff6b6b; font-size: 13px; text-align: center; margin-top: 8px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="auth-wrap">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <a href="index.html"><img src="img/logo.svg" alt="Q-tech"></a>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab-btn active" data-tab="login">Вход</button>
+            <button class="auth-tab-btn" data-tab="register">Регистрация</button>
+        </div>
+
+        <div id="errorMsg" class="error-msg"></div>
+
+        <!-- Форма входа -->
+        <form id="loginForm" class="auth-form active" onsubmit="return false;">
+            <div>
+                <label class="auth-label">Email</label>
+                <input type="email" id="loginEmail" class="auth-input" placeholder="ivan@example.com" required>
+            </div>
+            <div>
+                <label class="auth-label">Пароль</label>
+                <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="auth-submit" onclick="doLogin()">Войти</button>
+            <div class="auth-hint">Нет аккаунта? <a onclick="switchTab('register')">Зарегистрироваться</a></div>
+        </form>
+
+        <!-- Форма регистрации -->
+        <form id="registerForm" class="auth-form" onsubmit="return false;">
+            <div>
+                <label class="auth-label">Имя</label>
+                <input type="text" id="regName" class="auth-input" placeholder="Иван Петров" required>
+            </div>
+            <div>
+                <label class="auth-label">Email</label>
+                <input type="email" id="regEmail" class="auth-input" placeholder="ivan@example.com" required>
+            </div>
+            <div>
+                <label class="auth-label">Пароль</label>
+                <input type="password" id="regPassword" class="auth-input" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="auth-submit" onclick="doRegister()">Создать аккаунт</button>
+            <div class="auth-hint">Уже есть аккаунт? <a onclick="switchTab('login')">Войти</a></div>
+        </form>
+    </div>
+</div>
+
+<div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+    function showError(msg) {
+        let errorDiv = document.getElementById('errorMsg');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'errorMsg';
+            errorDiv.className = 'error-msg';
+            document.querySelector('.auth-card').prepend(errorDiv);
+        }
+        errorDiv.textContent = msg;
+        errorDiv.style.display = 'block';
+        setTimeout(() => { errorDiv.style.display = 'none'; }, 3000);
+    }
+
+    window.switchTab = function(tab) {
+        document.querySelectorAll('.auth-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.tab === tab);
+        });
+        document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+        document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+        document.getElementById('errorMsg').style.display = 'none';
+    };
+
+    window.doLogin = async function() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        if (!email || !password) {
+            showError('Заполните email и пароль');
+            return;
+        }
+        
+        try {
+            console.log('Попытка входа:', email);
+            const result = await window.apiLogin(email, password);
+            console.log('Результат:', result);
+            
+            if (result && result.access_token) {
+                // Токен уже сохранён в api.js
+                console.log('Токен сохранён, перенаправление...');
+                window.location.href = 'account.html';
+            } else {
+                showError('Неверный ответ от сервера');
+            }
+        } catch (err) {
+            console.error('Ошибка входа:', err);
+            showError(err.message || 'Ошибка входа. Проверьте email и пароль');
+        }
+    };
+
+    window.doRegister = async function() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        
+        if (!name || !email || !password) {
+            showError('Заполните все поля');
+            return;
+        }
+        
+        if (password.length < 6) {
+            showError('Пароль должен быть не менее 6 символов');
+            return;
+        }
+        
+        try {
+            console.log('Попытка регистрации:', email);
+            const result = await window.apiRegister(name, email, password);
+            console.log('Результат:', result);
+            
+            if (result && result.access_token) {
+                console.log('Регистрация успешна, перенаправление...');
+                window.location.href = 'account.html';
+            } else {
+                showError('Неверный ответ от сервера');
+            }
+        } catch (err) {
+            console.error('Ошибка регистрации:', err);
+            showError(err.message || 'Ошибка регистрации. Возможно, email уже используется');
+        }
+    };
+
+    // Проверка, если уже залогинены — сразу в аккаунт
+    if (window.isLoggedIn && window.isLoggedIn()) {
+        window.location.href = 'account.html';
+    }
+
+    // Обработка Enter
+    document.getElementById('loginEmail').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doLogin();
+    });
+    document.getElementById('loginPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doLogin();
+    });
+    document.getElementById('regName').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doRegister();
+    });
+    document.getElementById('regEmail').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doRegister();
+    });
+    document.getElementById('regPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') doRegister();
+    });
+</script>
+
+</body>
+</html>

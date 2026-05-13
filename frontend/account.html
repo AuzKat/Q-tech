@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет — Q-tech</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/account.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <div class="container nav">
+        <div class="nav-left">
+            <a href="index.html" class="logo"><img src="img/logo.svg" alt="Q-tech"></a>
+            <nav class="menu">
+                <a href="catalog.html">Каталог</a>
+                <a href="index.html#support">Покупателям</a>
+            </nav>
+        </div>
+        <div class="icons">
+            <div class="search-box">
+                <div class="icon-wrap search-toggle"><img src="img/icon-search.svg" alt="Поиск"></div>
+                <input type="text" id="searchInput" placeholder="Поиск...">
+            </div>
+            <a href="tel:+79999999999" class="icon-wrap"><img src="img/icon-phone.svg" alt="Телефон"></a>
+            <div class="icon-wrap cart-badge-wrap cart-toggle">
+                <img src="img/icon-busket.svg" alt="Корзина">
+                <span class="cart-badge">0</span>
+            </div>
+            <a href="account.html" class="icon-wrap"><img src="img/icon-account.svg" alt="Аккаунт"></a>
+            <button class="burger-btn"><span></span><span></span><span></span></button>
+            <div class="cart-modal"></div>
+        </div>
+    </div>
+</header>
+
+<div class="mobile-menu">
+    <button class="mobile-menu-close">×</button>
+    <a href="catalog.html">Каталог</a>
+    <a href="account.html">Личный кабинет</a>
+    <button id="mobile-logout-btn" style="margin-top:20px; background:#ff6b6b; color:white; border:none; padding:12px; border-radius:12px;">Выйти</button>
+</div>
+
+<div class="container account-wrap">
+    <aside class="account-sidebar">
+        <div class="acc-avatar-block">
+            <div class="acc-avatar"><span id="acc-avatar-initials">ИИ</span></div>
+            <div class="acc-avatar-info">
+                <div class="acc-name" id="acc-name-display">Загрузка...</div>
+                <div class="acc-email" id="acc-email-display"></div>
+            </div>
+        </div>
+
+        <nav class="acc-menu">
+            <button class="acc-menu-item active" data-tab="overview">Обзор</button>
+            <button class="acc-menu-item" data-tab="orders">Мои заказы</button>
+            <button class="acc-menu-item" data-tab="profile">Профиль</button>
+            <button class="acc-menu-item" data-tab="security">Безопасность</button>
+            <button class="acc-menu-item" data-tab="notifications">Уведомления</button>
+        </nav>
+
+        <button class="acc-logout-btn" id="logout-btn">Выйти из аккаунта</button>
+    </aside>
+
+    <div class="account-main">
+        <!-- Обзор -->
+        <div class="acc-tab active" id="tab-overview">
+            <div class="acc-tab-header">
+                <h2>Обзор</h2>
+                <p>Добро пожаловать в личный кабинет Q-tech</p>
+            </div>
+            <div class="acc-stats">
+                <div class="acc-stat-card">
+                    <div class="acc-stat-val" id="total-orders">0</div>
+                    <div class="acc-stat-label">Всего заказов</div>
+                </div>
+                <div class="acc-stat-card">
+                    <div class="acc-stat-val" id="delivered-orders">0</div>
+                    <div class="acc-stat-label">Доставлено</div>
+                </div>
+            </div>
+            <div class="acc-section-title">Последние заказы</div>
+            <div class="orders-list" id="recent-orders-list"></div>
+        </div>
+
+        <!-- Мои заказы -->
+        <div class="acc-tab" id="tab-orders">
+            <div class="acc-tab-header">
+                <h2>Мои заказы</h2>
+                <p>История всех ваших покупок</p>
+            </div>
+            <div class="orders-filter-row">
+                <button class="order-filter-btn active" data-filter="all">Все</button>
+                <button class="order-filter-btn" data-filter="delivery">В доставке</button>
+                <button class="order-filter-btn" data-filter="done">Доставлены</button>
+                <button class="order-filter-btn" data-filter="cancelled">Отменены</button>
+            </div>
+            <div class="orders-list" id="all-orders-list"></div>
+        </div>
+
+        <!-- Профиль -->
+        <div class="acc-tab" id="tab-profile">
+            <div class="acc-tab-header"><h2>Профиль</h2><p>Ваши персональные данные</p></div>
+            <div class="acc-form-grid">
+                <div class="acc-form-group"><label>Имя</label><input type="text" id="profile-name" class="acc-input"></div>
+                <div class="acc-form-group"><label>Email</label><input type="email" id="profile-email" class="acc-input" disabled></div>
+                <div class="acc-form-group"><label>Телефон</label><input type="tel" id="profile-phone" class="acc-input" placeholder="+7 (999) 000-00-00"></div>
+                <div class="acc-form-group full"><label>Адрес доставки</label><input type="text" id="profile-address" class="acc-input" placeholder="г. Москва, ул. Тверская, д. 1"></div>
+            </div>
+            <div class="acc-form-actions"><button class="acc-save-btn" id="save-profile-btn">Сохранить изменения</button></div>
+        </div>
+
+        <!-- Безопасность (упрощённо) -->
+        <div class="acc-tab" id="tab-security">
+            <div class="acc-tab-header"><h2>Безопасность</h2><p>Управление паролем</p></div>
+            <div class="security-block">
+                <h4>Изменить пароль</h4>
+                <div class="acc-form-grid">
+                    <div class="acc-form-group full"><label>Текущий пароль</label><input type="password" id="old-password" class="acc-input"></div>
+                    <div class="acc-form-group"><label>Новый пароль</label><input type="password" id="new-password" class="acc-input"></div>
+                    <div class="acc-form-group"><label>Подтвердите пароль</label><input type="password" id="confirm-password" class="acc-input"></div>
+                </div>
+                <button class="acc-save-btn" id="change-password-btn">Изменить пароль</button>
+            </div>
+        </div>
+
+        <!-- Уведомления (упрощённо) -->
+        <div class="acc-tab" id="tab-notifications">
+            <div class="acc-tab-header"><h2>Уведомления</h2><p>Настройка уведомлений</p></div>
+            <div class="notif-list">
+                <div class="notif-item"><div><h4>Статус заказа</h4><p>Изменения статуса доставки</p></div><div class="toggle-wrap"><input type="checkbox" class="toggle-input" checked><label class="toggle-label"></label></div></div>
+                <div class="notif-item"><div><h4>Акции и скидки</h4><p>Специальные предложения</p></div><div class="toggle-wrap"><input type="checkbox" class="toggle-input" checked><label class="toggle-label"></label></div></div>
+            </div>
+            <button class="acc-save-btn" id="save-notif-btn">Сохранить настройки</button>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-wrap">
+    <div class="container footer-grid">
+        <div class="footer-block"><h4>Каталог</h4><div class="footer-columns"><div class="footer-column"><a href="catalog.html?category=phones">Смартфоны</a><a href="catalog.html?category=laptops">Ноутбуки</a><a href="catalog.html?category=headphones">Наушники</a></div><div class="footer-column"><a href="catalog.html?category=watch">Умные часы</a><a href="catalog.html?category=dryer">Фены</a><a href="catalog.html?category=vacuum">Пылесосы</a></div></div></div>
+        <div class="footer-block"><h4>Покупателям</h4><div class="footer-columns"><div class="footer-column"><a href="index.html#support">Контакты</a><a href="index.html#reviews">Отзывы</a></div><div class="footer-column"><a href="index.html#delivery">Доставка</a><a href="index.html#payment">Оплата</a></div></div></div>
+    </div>
+    <p class="footer-copy">© 2026 Q-tech</p>
+</footer>
+
+<div class="bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script>
+    let currentUser = null;
+    let userOrders = [];
+
+    // Проверка авторизации
+    async function checkAuth() {
+        if (!window.isLoggedIn || !window.isLoggedIn()) {
+            window.location.href = 'login.html';
+            return false;
+        }
+        try {
+            currentUser = await window.getCurrentUser();
+            document.getElementById('acc-name-display').textContent = currentUser.name || currentUser.email;
+            document.getElementById('acc-email-display').textContent = currentUser.email;
+            const initials = (currentUser.name || currentUser.email).substring(0, 2).toUpperCase();
+            document.getElementById('acc-avatar-initials').textContent = initials;
+            document.getElementById('profile-name').value = currentUser.name || '';
+            document.getElementById('profile-email').value = currentUser.email;
+            return true;
+        } catch(e) {
+            window.location.href = 'login.html';
+            return false;
+        }
+    }
+
+    // Загрузка заказов
+    async function loadOrders() {
+        try {
+            userOrders = await window.getOrders();
+            renderRecentOrders();
+            renderAllOrders('all');
+            document.getElementById('total-orders').textContent = userOrders.length;
+            const delivered = userOrders.filter(o => o.status === 'done').length;
+            document.getElementById('delivered-orders').textContent = delivered;
+        } catch(e) {
+            console.error('Ошибка загрузки заказов:', e);
+        }
+    }
+
+    function getStatusText(status) {
+        const map = { 'created': 'Оформлен', 'delivery': 'В доставке', 'done': 'Доставлен', 'cancelled': 'Отменён' };
+        return map[status] || status;
+    }
+
+    function getStatusClass(status) {
+        const map = { 'created': 'status-pending', 'delivery': 'status-delivery', 'done': 'status-done', 'cancelled': 'status-cancel' };
+        return map[status] || 'status-pending';
+    }
+
+    function renderRecentOrders() {
+        const container = document.getElementById('recent-orders-list');
+        const recent = userOrders.slice(0, 3);
+        if (!recent.length) {
+            container.innerHTML = '<p style="color:#5f6675; text-align:center;">У вас пока нет заказов</p>';
+            return;
+        }
+        container.innerHTML = recent.map(order => {
+            const items = order.items || [];
+            const firstItem = items[0] || {};
+            return `
+                <div class="order-card">
+                    <div class="order-meta">
+                        <div class="order-num">${order.order_number}</div>
+                        <div class="order-status ${getStatusClass(order.status)}">${getStatusText(order.status)}</div>
+                    </div>
+                    <div class="order-item-name">${firstItem.title || 'Товар'}</div>
+                    <div class="order-footer">
+                        <div class="order-date">${new Date(order.created_at).toLocaleDateString('ru-RU')}</div>
+                        <div class="order-total">${order.total_amount.toLocaleString()} ₽</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderAllOrders(filter) {
+        const container = document.getElementById('all-orders-list');
+        let filtered = [...userOrders];
+        if (filter === 'delivery') filtered = filtered.filter(o => o.status === 'delivery');
+        else if (filter === 'done') filtered = filtered.filter(o => o.status === 'done');
+        else if (filter === 'cancelled') filtered = filtered.filter(o => o.status === 'cancelled');
+        
+        if (!filtered.length) {
+            container.innerHTML = '<p style="color:#5f6675; text-align:center;">Заказов не найдено</p>';
+            return;
+        }
+        container.innerHTML = filtered.map(order => {
+            const items = order.items || [];
+            const itemsHtml = items.map(item => `<div class="order-item-name">${item.title} × ${item.quantity}</div>`).join('');
+            const canCancel = order.status === 'created' || order.status === 'delivery';
+            return `
+                <div class="order-card" data-order-id="${order.id}">
+                    <div class="order-meta">
+                        <div class="order-num">${order.order_number}</div>
+                        <div class="order-status ${getStatusClass(order.status)}">${getStatusText(order.status)}</div>
+                    </div>
+                    <div class="order-items-preview">${itemsHtml}</div>
+                    <div class="order-footer">
+                        <div class="order-date">${new Date(order.created_at).toLocaleDateString('ru-RU')}</div>
+                        <div class="order-total">${order.total_amount.toLocaleString()} ₽</div>
+                        ${canCancel ? `<button class="cancel-order-btn" data-id="${order.id}" style="background:#ff6b6b; color:white; border:none; padding:8px 16px; border-radius:10px; cursor:pointer;">Отменить</button>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        document.querySelectorAll('.cancel-order-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const orderId = btn.dataset.id;
+                if (confirm('Отменить заказ?')) {
+                    try {
+                        await window.cancelOrder(orderId);
+                        await loadOrders();
+                        showToast('Заказ отменён');
+                    } catch(err) {
+                        alert('Ошибка отмены: ' + err.message);
+                    }
+                }
+            });
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.className = 'acc-toast';
+        toast.textContent = msg;
+        toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#01C38D;color:#191C29;padding:12px 24px;border-radius:12px;z-index:9999;';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', async () => {
+        const isAuth = await checkAuth();
+        if (!isAuth) return;
+        await loadOrders();
+        
+        // Вкладки
+        document.querySelectorAll('.acc-menu-item').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                document.querySelectorAll('.acc-menu-item').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.acc-tab').forEach(t => t.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            });
+        });
+        
+        // Фильтры заказов
+        document.querySelectorAll('.order-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.order-filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderAllOrders(btn.dataset.filter);
+            });
+        });
+        
+        // Выход
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) logoutBtn.addEventListener('click', () => { window.logout(); });
+        
+        // Сохранение профиля
+        document.getElementById('save-profile-btn').addEventListener('click', () => {
+            showToast('Данные сохранены (функция в разработке)');
+        });
+        
+        // Смена пароля
+        document.getElementById('change-password-btn').addEventListener('click', () => {
+            showToast('Функция смены пароля в разработке');
+        });
+    });
+</script>
+</body>
+</html>
