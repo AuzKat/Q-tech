@@ -2,7 +2,7 @@
    API.JS — работа с бэкендом Q-tech
    ══════════════════════════════════════ */
 
-const API_BASE = "q-tech-production-1e0f.up.railway.app";
+const API_BASE = "https://q-tech-production-1e0f.up.railway.app/api";
 
 // Хранение токена
 let authToken = localStorage.getItem("access_token");
