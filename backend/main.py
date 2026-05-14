@@ -25,10 +25,11 @@ app.add_middleware(
 # Временный эндпоинт для импорта товаров из products.js
 # ------------------------------------------------------------
 @app.post("/api/import-products")
-def import_products(db: Session = Depends(get_db)):
-    """Импортирует товары (запусти один раз)"""
-    # Здесь позже добавим импорт из твоего products.js
-    return {"message": "Товары импортированы"}
+def run_import_products():
+    """Импортирует товары из import_products.py (запусти один раз)"""
+    from import_products import import_products as do_import, products
+    do_import()
+    return {"message": f"Импортировано товаров: {len(products)}"}
 
 
 # ------------------------------------------------------------
