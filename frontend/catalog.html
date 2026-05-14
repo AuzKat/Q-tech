@@ -162,9 +162,13 @@
 <!-- MOBILE FILTER DRAWER -->
 <div class="filter-drawer-overlay"></div>
 <div class="filter-drawer">
-  <button class="filter-drawer-close">×</button>
 
-  <div style="margin-top:20px;">
+  <div class="filter-drawer-header">
+    <span>Фильтры</span>
+    <button class="filter-drawer-close">×</button>
+  </div>
+
+  <div class="filter-drawer-body">
     <div class="sidebar-section">
       <h4>Цена, ₽</h4>
       <div class="price-range">
@@ -176,14 +180,12 @@
       </div>
     </div>
 
-    <div class="sidebar-section" style="margin-top:24px;">
+    <div class="sidebar-section">
       <h4>Бренд</h4>
-      <div class="filter-list brand-list">
-        <!-- Рендерится через JS -->
-      </div>
+      <div class="filter-list brand-list"></div>
     </div>
 
-    <div class="sidebar-section" style="margin-top:24px;">
+    <div class="sidebar-section">
       <h4>Наличие</h4>
       <div class="filter-list">
         <label class="filter-item">
@@ -192,12 +194,13 @@
         </label>
       </div>
     </div>
-
-    <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
-      <button class="filter-reset">Сбросить</button>
-      <button class="filter-apply filter-drawer-close">Применить</button>
-    </div>
   </div>
+
+  <div class="filter-drawer-footer">
+    <button class="filter-reset">Сбросить</button>
+    <button class="filter-apply filter-drawer-close">Применить</button>
+  </div>
+
 </div>
 
 <!-- FOOTER -->

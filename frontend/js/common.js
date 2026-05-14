@@ -29,31 +29,85 @@ function initSearch() {
   document.addEventListener('click', e => {
     if (!searchBox.contains(e.target)) {
       searchBox.classList.remove('active');
+      hideSuggestions();
     }
   });
 
+  // Живой поиск при вводе
+  searchInput.addEventListener('input', () => {
+    const v = searchInput.value.trim();
+    if (v.length < 2) { hideSuggestions(); return; }
+    showSuggestions(v);
+  });
+
+  // Enter — переход в каталог с фильтром
   searchInput.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
-    const v = searchInput.value.toLowerCase().trim();
+    const v = searchInput.value.trim();
     if (!v) return;
-
-    const map = [
-      { keys: ['iphone', 'айфон', 'смартфон', 'телефон', 'samsung', 'pixel'],   href: 'catalog.html?category=phones' },
-      { keys: ['macbook', 'ноут', 'laptop', 'mac'],                               href: 'catalog.html?category=laptops' },
-      { keys: ['airpods', 'науш', 'sony', 'wh-1000', 'headphone'],               href: 'catalog.html?category=headphones' },
-      { keys: ['watch', 'часы', 'ultra'],                                          href: 'catalog.html?category=watch' },
-      { keys: ['dyson', 'пылесос', 'vacuum', 'dreame', 'kitfort', 'dexp'],        href: 'catalog.html?category=vacuum' },
-      { keys: ['фен', 'dryer', 'airwrap', 'supersonic', 'aceline'],              href: 'catalog.html?category=dryer' },
-    ];
-
-    for (const { keys, href } of map) {
-      if (keys.some(k => v.includes(k))) {
-        window.location.href = href;
-        return;
-      }
-    }
-    window.location.href = 'catalog.html';
+    window.location.href = `catalog.html?search=${encodeURIComponent(v)}`;
   });
+
+  // Создаём дропдаун один раз
+  const dropdown = document.createElement('div');
+  dropdown.id = 'search-dropdown';
+  dropdown.style.cssText = `
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0; right: 0;
+    background: #11182B;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    z-index: 999;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    display: none;
+  `;
+  searchBox.style.position = 'relative';
+  searchBox.appendChild(dropdown);
+
+  function showSuggestions(query) {
+    if (typeof PRODUCTS === 'undefined') return;
+    const q = query.toLowerCase();
+    const results = PRODUCTS.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.brand.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q)
+    ).slice(0, 6);
+
+    if (!results.length) { hideSuggestions(); return; }
+
+    dropdown.innerHTML = results.map(p => `
+      <div onclick="window.location.href='product.html?id=${p.id}'" style="
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 16px; cursor: pointer;
+        transition: background 0.15s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      " onmouseover="this.style.background='rgba(1,195,141,0.08)'"
+         onmouseout="this.style.background='transparent'">
+        <img src="${p.images[0]}" style="width:36px;height:36px;object-fit:contain;border-radius:6px;flex-shrink:0;" onerror="this.src='img/placeholder.webp'">
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:13px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.title}</div>
+          <div style="font-size:12px;color:#5f6675;">${p.brand}</div>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:#01C38D;white-space:nowrap;">${formatPrice(p.price)} ₽</div>
+      </div>
+    `).join('') + `
+      <div onclick="window.location.href='catalog.html?search=${encodeURIComponent(query)}'" style="
+        padding: 12px 16px; text-align: center;
+        font-size: 13px; color: #01C38D; cursor: pointer;
+        transition: background 0.15s;
+      " onmouseover="this.style.background='rgba(1,195,141,0.08)'"
+         onmouseout="this.style.background='transparent'">
+        Смотреть все результаты →
+      </div>
+    `;
+    dropdown.style.display = 'block';
+  }
+
+  function hideSuggestions() {
+    dropdown.style.display = 'none';
+  }
 }
 
 /* ── BURGER MENU ── */

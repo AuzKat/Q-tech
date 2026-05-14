@@ -19,12 +19,23 @@ let activeFilters = {
   priceMin: 0,
   inStock: false,
   sort: 'popular',
+   search: '',
 };
 
 function initCatalog() {
 
   const params   = new URLSearchParams(window.location.search);
   activeCategory = params.get('category') || 'all';
+
+  const searchQuery = params.get('search') || '';
+if (searchQuery) {
+  activeFilters.search = searchQuery;
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.value = searchQuery;
+    document.querySelector('.search-box')?.classList.add('active');
+  }
+}
 
   /* Set heading */
   const label = CATEGORY_LABELS[activeCategory] || 'Каталог';
@@ -68,6 +79,14 @@ function renderProducts() {
   if (activeFilters.inStock) {
     items = items.filter(p => p.inStock);
   }
+
+  if (activeFilters.search) {
+  const q = activeFilters.search.toLowerCase();
+  items = items.filter(p =>
+    p.title.toLowerCase().includes(q) ||
+    p.brand.toLowerCase().includes(q)
+  );
+}
 
   /* Sort */
   if (activeFilters.sort === 'price-asc')  items.sort((a, b) => a.price - b.price);
