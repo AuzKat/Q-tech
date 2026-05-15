@@ -135,6 +135,9 @@ body {
   align-items: center;
   gap: 18px;
 }
+@media (max-width: 600px) {
+  .icons { position: static; }
+}
 
 .icon-wrap {
   height: 22px;
