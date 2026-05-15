@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
     body { min-height: 100vh; }
 
     .checkout-wrap {
@@ -430,6 +432,12 @@
       .co-form-grid { grid-template-columns: 1fr; }
       .co-form-group.full { grid-column: 1; }
       .payment-options { grid-template-columns: 1fr; }
+      .checkout-wrap { padding: 24px 0 60px; }
+      .co-block { padding: 20px 16px; border-radius: 16px; }
+      .checkout-title { font-size: 24px; margin-bottom: 20px; }
+      .delivery-option { padding: 12px 14px; gap: 10px; }
+      .co-input { font-size: 16px; }
+      .delivery-option-price { font-size: 13px; }
     }
   </style>
 </head>
