@@ -116,6 +116,8 @@ function initCartUI() {
   document.addEventListener('click', e => {
     if (!modal.contains(e.target) && !toggle.contains(e.target)) {
       modal.classList.remove('active');
+      const overlay = document.getElementById('cart-overlay');
+      if (overlay) overlay.remove();
     }
   });
 
@@ -141,6 +143,21 @@ function initCartUI() {
 function renderCartModal() {
   const modal = document.querySelector('.cart-modal');
   if (!modal) return;
+
+  // Добавить overlay на мобильном
+if (window.innerWidth <= 600) {
+  let overlay = document.getElementById('cart-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'cart-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;';
+    overlay.addEventListener('click', () => {
+      modal.classList.remove('active');
+      overlay.remove();
+    });
+    document.body.appendChild(overlay);
+  }
+}
 
   const items = Cart.getAll();
 
