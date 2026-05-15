@@ -187,6 +187,9 @@
 
     document.getElementById('loginBtn').addEventListener('click', doLogin);
     document.getElementById('registerBtn').addEventListener('click', doRegister);
+    document.querySelectorAll('.auth-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
 </script>
 
 </body>
