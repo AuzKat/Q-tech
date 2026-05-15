@@ -107,6 +107,8 @@ function initCartUI() {
 
   if (!toggle || !modal) return;
 
+  document.body.appendChild(modal);
+
   /* open / close */
   toggle.addEventListener('click', () => {
     modal.classList.toggle('active');
@@ -130,7 +132,7 @@ function initCartUI() {
       if (overlay) overlay.remove();
     }
   });
-  
+
   /* update badge */
   function updateBadge() {
     const n = Cart.count();
