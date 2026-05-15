@@ -321,6 +321,26 @@
         document.getElementById('change-password-btn').addEventListener('click', () => {
             showToast('Функция смены пароля в разработке');
         });
+
+        // Уведомления
+        document.getElementById('save-notif-btn').addEventListener('click', () => {
+            const toggles = document.querySelectorAll('.toggle-input');
+            const settings = {
+                orderStatus: toggles[0]?.checked,
+                promos: toggles[1]?.checked
+            };
+            localStorage.setItem('notif_settings', JSON.stringify(settings));
+            showToast('Настройки уведомлений сохранены');
+        });
+
+        // Восстановить настройки уведомлений
+        const saved = localStorage.getItem('notif_settings');
+        if (saved) {
+            const settings = JSON.parse(saved);
+            const toggles = document.querySelectorAll('.toggle-input');
+            if (toggles[0]) toggles[0].checked = settings.orderStatus;
+            if (toggles[1]) toggles[1].checked = settings.promos;
+        }
     });
 </script>
 </body>
