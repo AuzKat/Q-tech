@@ -53,6 +53,15 @@ if (searchQuery) {
   renderProducts();
   bindSort();
   bindMobileFilter();
+
+  Cart.onChange(() => {
+    document.querySelectorAll('[data-cart-btn]').forEach(btn => {
+      refreshCartBtn(Number(btn.dataset.cartBtn));
+    });
+    document.querySelectorAll('[data-qty-inc]').forEach(btn => {
+      refreshCartBtn(Number(btn.dataset.qtyInc));
+    });
+  });
 }
 
 /* ── RENDER PRODUCTS ── */
